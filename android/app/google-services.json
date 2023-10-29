@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "748212473429",
+    "project_id": "rnincomeexpensegit",
+    "storage_bucket": "rnincomeexpensegit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:748212473429:android:2a4af9ea884d8cb0210edc",
+        "android_client_info": {
+          "package_name": "com.awesomeproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiyVS7O4E86dAuA_g_-alU-7IVEO5_RhY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
