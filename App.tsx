@@ -1,23 +1,27 @@
 import React, { useEffect } from 'react';
 import { Button, Text, useColorScheme, View } from 'react-native';
 import { dummyApi } from './utils/ApiService';
-// import { onValue, ref } from 'firebase/database';
-// import { db } from './Firebase.Config';
-// import firestore from '@react-native-firebase/firestore';
-// import { getDoc } from 'firebase/firestore';
-// import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, DocumentData, getDocs } from 'firebase/firestore';
+import { FIREBASE_DB, FIREBASE_DB_NAME } from './Firebase.Config';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
-//   const citiesRef = ()=>{
-//     var a = collection(db, "cities");
-//     console.log(a);
-//   }
 
-  // getDoc();
-  // const collection = doc(FIREBASE_DATABASE,'collectionname','docname');
-  // const dbCollection = collection(FIREBASEAPP.firestore(), collectionName);
-  // const a = firestore.collection('as');
+  const fetchPost = async () => {
+    console.log('a');
+    await getDocs(collection(FIREBASE_DB, FIREBASE_DB_NAME))
+      .then((querySnapshot) => {
+        const items: DocumentData[] = [];
+        querySnapshot.forEach((doc) => {
+          items.push(doc.data());
+        });
+        console.log('querySnapshot', items);
+      })
+  }
+
+  useEffect(() => {
+    fetchPost();
+  }, [])
 
   const dummyApiCall = () => {
     dummyApi().then(response => {
@@ -30,29 +34,15 @@ function App(): JSX.Element {
       });
   }
 
-//   useEffect(() => {
-//       const d = firestore().collection('user').onSnapshot(q => {
-//         const u = []
-//         q.forEach(doc=>{
-//           u.push({
-//             ...doc.data(),
-//             key:doc.id
-//           })
-//         })
-//       })
-//     return () => citiesRef();
-//   }, []);
-
   return (
     <View>
       <Text style={{ fontSize: 30 }}>Hello World</Text>
       <Button
-        title='Call API'
+        title='Call API2'
         onPress={dummyApiCall}
       ></Button>
     </View>
   );
 }
-
 
 export default App;
