@@ -1,21 +1,19 @@
 import React, { useEffect } from 'react';
 import { Button, Text, useColorScheme, View } from 'react-native';
 import { dummyApi } from './utils/ApiService';
-import { collection, DocumentData, getDocs } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { FIREBASE_DB, FIREBASE_DB_NAME } from './Firebase.Config';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const fetchPost = async () => {
-    console.log('a');
-    await getDocs(collection(FIREBASE_DB, FIREBASE_DB_NAME))
+    await getDocs(collection(FIREBASE_DB, "/testdb/"))
       .then((querySnapshot) => {
-        const items: DocumentData[] = [];
         querySnapshot.forEach((doc) => {
-          items.push(doc.data());
+          const tableName = doc.id;
+          const tableData = doc.data();
         });
-        console.log('querySnapshot', items);
       })
   }
 
@@ -24,9 +22,9 @@ function App(): JSX.Element {
   }, [])
 
   const dummyApiCall = () => {
+    console.log('data');
     dummyApi().then(response => {
       const data = response.data;
-      console.log(data);
       // Handle the data here
     })
       .catch(error => {
