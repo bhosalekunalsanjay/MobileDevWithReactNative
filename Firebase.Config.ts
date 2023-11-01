@@ -12,4 +12,7 @@ const firebaseConfig = {
 
 const FIREBASE_APP = initializeApp(firebaseConfig);
 export const FIREBASE_DB = getFirestore(FIREBASE_APP);
-export const FIREBASE_DB_NAME = "/testdb/";
+export const FIREBASE_DB_EXPENSE_TYPES = "/m_expense_types/";
+export const FIREBASE_DB_INCOME_TYPES = "/m_income_types/";
+export const FIREBASE_DB_USERS = "/users/";
+export const FIREBASE_DB_USERS_EXPENSES = "/users_expenses/";
