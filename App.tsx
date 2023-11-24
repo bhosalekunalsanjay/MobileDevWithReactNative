@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
-import { Button, Text, useColorScheme, View } from 'react-native';
+import { useColorScheme } from 'react-native';
 import { dummyApi } from './utils/ApiService';
-import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
-import { FIREBASE_DB, FIREBASE_DB_EXPENSE_TYPES } from './Firebase.Config';
-import { expenseTypesData } from './utils/Masters';
 import 'react-native-gesture-handler'; // Import this at the top of your entry point
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import AddExpense from './screens/add.expense';
+import AddExpense from './screens/add.expensetype';
 import HomeScreen from './screens/home';
+import { AddNewExpTypScreenMeta, HomeScreenMeta } from './utils/constants';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,22 +27,6 @@ function App(): JSX.Element {
     // fetchTestDb();
   }, []);
 
-  const createExpense = () => {
-    const expenseTypesCollectionRef = collection(FIREBASE_DB, FIREBASE_DB_EXPENSE_TYPES);
-
-    expenseTypesData.forEach(async (expenseType) => {
-      const docRef = doc(expenseTypesCollectionRef, String(expenseType.id));
-
-      try {
-        // Add the document to Firestore
-        await setDoc(docRef, expenseType);
-        console.log(`Added expense type: ${expenseType.name}`);
-      } catch (error) {
-        console.error('Error adding expense type:', error);
-      }
-    });
-  }
-
   const dummyExternalApiCall = () => {
     console.log('data');
     dummyApi().then(response => {
@@ -64,8 +46,8 @@ function App(): JSX.Element {
     <NavigationContainer>
       <Stack.Navigator>
         {/* Define your screens here */}
-        <Stack.Screen name="Add New Expense" component={AddExpense} />
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen options={{title:AddNewExpTypScreenMeta.titleText}} name={AddNewExpTypScreenMeta.navId} component={AddExpense} />
+        <Stack.Screen options={{title:HomeScreenMeta.titleText}} name={HomeScreenMeta.navId} component={HomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
