@@ -12,6 +12,7 @@ import { Table, Row, Rows } from 'react-native-table-component';
 
 function AddExpenseType({ navigation }: any) {
   const [expenseName, setExpenseName] = useState('');
+  const [expenses, setExpenses] = useState([]);
   // const [open, setOpen] = useState(false);
   // const [selectedOption, setSelectedOption] = useState<any>(null);
   // const [items, setItems] = useState([
@@ -58,21 +59,19 @@ function AddExpenseType({ navigation }: any) {
 
   // Function to get expense types
   const getExpenseTypes = async () => {
-    console.log("aaa");
-    
     const expenseTypesCollectionRef = collection(FIREBASE_DB, FIREBASE_DB_EXPENSE_TYPES);
-    console.log("aaa2222");
-
-    const q = query(expenseTypesCollectionRef);
+    const collectionRefQuery = query(expenseTypesCollectionRef);
 
     try {
-      const querySnapshot = await getDocs(q);
+      const querySnapshot = await getDocs(collectionRefQuery);
+      const tempExpenses = [];
 
       querySnapshot.forEach((doc) => {
-        const tableName = doc.id;
-        const tableData = doc.data();
-        console.log(tableName);
-        console.log(tableData);
+        const docId = doc.id;
+        const docData = doc.data();
+        console.log(docId);
+        console.log(docData);
+        tempExpenses.push({...docData, id:docId});
       });
 
       DisplayAlert("Success", "Expense Types were retrieved Successfully");
